@@ -3,4 +3,6 @@
   <string name="title_read">Читаю</string>
   <string name="title_archive">Архив</string>
   <string name="title_choosen">Избранное</string>
+  <string name="dialog_error_title">Error</string>
+  <string name="dialog_action_ok">Ok</string>
 </resources>
