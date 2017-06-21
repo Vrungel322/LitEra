@@ -30,11 +30,11 @@ import rx.Subscription;
 
   @Override protected void onFirstViewAttach() {
     super.onFirstViewAttach();
-    fetchAllBooks();
+    fetchAllBooks(0);
   }
 
-  public void fetchAllBooks() {
-getViewState().startRefreshingView();
+  public void fetchAllBooks(int selectedItemId) {
+    getViewState().startRefreshingView();
     mBookEntitiesReadNow.clear();
     mBookEntitiesArchive.clear();
     mBookEntitiesChoosen.clear();
@@ -55,21 +55,22 @@ getViewState().startRefreshingView();
           return Observable.just("");
         })
         .subscribe(bookEntities -> {
-          getViewState().fillInRV(mBookEntitiesReadNow);
+          getViewState().fillInRV(mBookEntitiesReadNow, mBookEntitiesArchive, mBookEntitiesChoosen,
+              selectedItemId);
           getViewState().stopRefreshingView();
         }, Throwable::printStackTrace);
     addToUnsubscription(subscription);
   }
 
   public void getReadNowBooks() {
-    getViewState().fillInRV(mBookEntitiesReadNow);
+    getViewState().fillInCurrentRV(mBookEntitiesReadNow);
   }
 
   public void getArchiveBooks() {
-    getViewState().fillInRV(mBookEntitiesArchive);
+    getViewState().fillInCurrentRV(mBookEntitiesArchive);
   }
 
   public void getChoosenBooks() {
-    getViewState().fillInRV(mBookEntitiesChoosen);
+    getViewState().fillInCurrentRV(mBookEntitiesChoosen);
   }
 }

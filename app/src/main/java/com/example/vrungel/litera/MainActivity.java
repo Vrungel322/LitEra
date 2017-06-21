@@ -13,15 +13,15 @@ import java.util.ArrayList;
 public class MainActivity extends BaseActivity implements IMainActivityView {
 
   @InjectPresenter MainActivityPresenter mainActivityPresenter;
-  @BindView(R.id.message)  TextView mTextMessage;
-  @BindView(R.id.navigation)  BottomNavigationView mBottomNavigationView;
+  @BindView(R.id.message) TextView mTextMessage;
+  @BindView(R.id.navigation) BottomNavigationView mBottomNavigationView;
   @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout mSwipeRefreshLayout;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_main);
     super.onCreate(savedInstanceState);
     mSwipeRefreshLayout.setOnRefreshListener(() -> {
-      mainActivityPresenter.fetchAllBooks();
+      mainActivityPresenter.fetchAllBooks(mBottomNavigationView.getSelectedItemId());
     });
 
     mBottomNavigationView.setOnNavigationItemSelectedListener(item -> {
@@ -40,9 +40,24 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     });
   }
 
-  @Override public void fillInRV(ArrayList<BookEntity> bookEntitiesReadNow) {
+  @Override public void fillInRV(ArrayList<BookEntity> entitiesReadNow,
+      ArrayList<BookEntity> bookEntitiesArchive, ArrayList<BookEntity> bookEntitiesChoosen,
+      int selectedItemId) {
 
-    mTextMessage.setText(bookEntitiesReadNow.size()+"");
+    switch (selectedItemId) {
+      case 0:
+        mTextMessage.setText(entitiesReadNow.size() + "");
+        break;
+      case R.id.navigation_read:
+        mTextMessage.setText(entitiesReadNow.size() + "");
+        break;
+      case R.id.navigation_archive:
+        mTextMessage.setText(bookEntitiesArchive.size() + "");
+        break;
+      case R.id.navigation_choosen:
+        mTextMessage.setText(bookEntitiesChoosen.size() + "");
+        break;
+    }
   }
 
   @Override public void startRefreshingView() {
@@ -51,5 +66,9 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
 
   @Override public void stopRefreshingView() {
     if (mSwipeRefreshLayout.isRefreshing()) mSwipeRefreshLayout.setRefreshing(false);
+  }
+
+  @Override public void fillInCurrentRV(ArrayList<BookEntity> bookEntitiesChoosen) {
+    mTextMessage.setText(bookEntitiesChoosen.size() + "");
   }
 }

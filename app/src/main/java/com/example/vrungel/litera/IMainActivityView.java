@@ -13,9 +13,14 @@ import java.util.ArrayList;
 @StateStrategyType(AddToEndSingleStrategy.class) public interface IMainActivityView
     extends MvpView {
 
-  void fillInRV(ArrayList<BookEntity> bookEntitiesReadNow);
 
   void startRefreshingView();
 
   void stopRefreshingView();
+
+  void fillInCurrentRV(ArrayList<BookEntity> bookEntitiesChoosen);
+
+  void fillInRV(ArrayList<BookEntity> bookEntitiesReadNow,
+      ArrayList<BookEntity> bookEntitiesArchive, ArrayList<BookEntity> bookEntitiesChoosen,
+      int selectedItemId);
 }
