@@ -10,4 +10,5 @@ public final class Constants {
     // TODO: do not forget to paste base url
     public static final String BASE_URL = "http://" + DOMEN + "/";
   }
+  public static final String SECRET = "14a6579a984b3c6abecda6c2dfa83a63";
 }

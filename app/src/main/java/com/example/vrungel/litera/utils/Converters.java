@@ -1,6 +1,8 @@
 package com.example.vrungel.litera.utils;
 
 import android.net.Uri;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.TimeZone;
@@ -109,5 +111,24 @@ public final class Converters {
 
   public static String getUrl(int res) {
     return Uri.parse("android.resource://com.apps.twelve.floor.salon/" + res).toString();
+  }
+
+  public static String md5(String s) {
+    try {
+      // Create MD5 Hash
+      MessageDigest digest = java.security.MessageDigest.getInstance("MD5");
+      digest.update(s.getBytes());
+      byte messageDigest[] = digest.digest();
+
+      // Create Hex String
+      StringBuffer hexString = new StringBuffer();
+      for (int i=0; i<messageDigest.length; i++)
+        hexString.append(Integer.toHexString(0xFF & messageDigest[i]));
+      return hexString.toString();
+
+    } catch (NoSuchAlgorithmException e) {
+      e.printStackTrace();
+    }
+    return "";
   }
 }
