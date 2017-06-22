@@ -61,6 +61,8 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
   private void startNewActivity(BookEntity bookEntity) {
     Intent intent = new Intent(MainActivity.this, BookReaderActivity.class);
     intent.putExtra(Constants.BOOK_ID, bookEntity.getBook().getId().toString());
+    intent.putExtra(Constants.BOOK_TITLE, bookEntity.getBook().getTitle());
+    intent.putExtra(Constants.BOOK_AUTHOR, bookEntity.getBook().getAuthorName());
     startActivity(intent);
   }
 

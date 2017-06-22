@@ -25,6 +25,8 @@ public class BookReaderActivity extends BaseActivity implements IBookReaderActiv
   @Override protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_book_reader);
     super.onCreate(savedInstanceState);
+    setTitle(getIntent().getExtras().getString(Constants.BOOK_TITLE, ""));
+    setSubTitleAppBar(getIntent().getExtras().getString(Constants.BOOK_AUTHOR, ""));
   }
 
   @Override public void showPB() {

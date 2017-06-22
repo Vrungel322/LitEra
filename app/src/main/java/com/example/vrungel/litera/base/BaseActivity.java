@@ -51,6 +51,12 @@ public abstract class BaseActivity extends MvpAppCompatActivity {
       actionBar.setTitle(resId);
     }
   }
+  public void setSubTitleAppBar(String subTitleAppBar) {
+    ActionBar actionBar = getSupportActionBar();
+    if (actionBar != null) {
+      actionBar.setSubtitle(subTitleAppBar);
+    }
+  }
 
   public void setIconAppBar(@DrawableRes int resId) {
     ActionBar actionBar = getSupportActionBar();

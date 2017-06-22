@@ -6,6 +6,8 @@ package com.example.vrungel.litera.utils;
 
 public final class Constants {
   public static final java.lang.String BOOK_ID = "BOOK_ID";
+  public static final java.lang.String BOOK_TITLE = "BOOK_TITLE";
+  public static final java.lang.String BOOK_AUTHOR = "BOOK_AUTHOR";
 
   public class Remote {
     private static final String DOMEN = "api.test.lit-era.com/";
