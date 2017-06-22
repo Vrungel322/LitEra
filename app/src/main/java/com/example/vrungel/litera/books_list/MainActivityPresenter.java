@@ -1,8 +1,9 @@
-package com.example.vrungel.litera;
+package com.example.vrungel.litera.books_list;
 
 import com.arellomobile.mvp.InjectViewState;
+import com.example.vrungel.litera.App;
 import com.example.vrungel.litera.base.BasePresenter;
-import com.example.vrungel.litera.entity.BookEntity;
+import com.example.vrungel.litera.entity.book_general_info.BookEntity;
 import com.example.vrungel.litera.utils.Constants;
 import com.example.vrungel.litera.utils.Converters;
 import com.example.vrungel.litera.utils.ThreadSchedulers;
@@ -16,9 +17,6 @@ import rx.Subscription;
 
 @InjectViewState public class MainActivityPresenter extends BasePresenter<IMainActivityView> {
 
-  private String token = "-eCJYBDvXRSPWsnyfhpZWfxsqvUgyBCF";
-  private String deviceId = "55afee2145b9c467";
-  private String appAndroid = "android";
   private ArrayList<BookEntity> mBookEntitiesAll = new ArrayList<>();
   private ArrayList<BookEntity> mBookEntitiesReadNow = new ArrayList<>();
   private ArrayList<BookEntity> mBookEntitiesArchive = new ArrayList<>();
@@ -38,27 +36,28 @@ import rx.Subscription;
     mBookEntitiesReadNow.clear();
     mBookEntitiesArchive.clear();
     mBookEntitiesChoosen.clear();
-    Subscription subscription = mDataManager.fetchAllbooks(appAndroid, deviceId, token,
-        Converters.md5("55afee2145b9c467" + Constants.SECRET + token), 11)
-        .compose(ThreadSchedulers.applySchedulers())
-        .concatMap(Observable::from)
-        .concatMap(bookEntity -> {
-          if (bookEntity.getLibInfo().getType() == 0) {
-            mBookEntitiesReadNow.add(bookEntity);
-          }
-          if (bookEntity.getLibInfo().getType() == 1) {
-            mBookEntitiesArchive.add(bookEntity);
-          }
-          if (bookEntity.getLibInfo().getType() == 2) {
-            mBookEntitiesChoosen.add(bookEntity);
-          }
-          return Observable.just("");
-        })
-        .subscribe(bookEntities -> {
-          getViewState().fillInRV(mBookEntitiesReadNow, mBookEntitiesArchive, mBookEntitiesChoosen,
-              selectedItemId);
-          getViewState().stopRefreshingView();
-        }, Throwable::printStackTrace);
+    Subscription subscription =
+        mDataManager.fetchAllbooks(Constants.APP_ANDROID, Constants.DEVICE_ID, Constants.TOKEN,
+            Converters.md5("55afee2145b9c467" + Constants.SECRET + Constants.TOKEN), 11)
+            .compose(ThreadSchedulers.applySchedulers())
+            .concatMap(Observable::from)
+            .concatMap(bookEntity -> {
+              if (bookEntity.getLibInfo().getType() == 0) {
+                mBookEntitiesReadNow.add(bookEntity);
+              }
+              if (bookEntity.getLibInfo().getType() == 1) {
+                mBookEntitiesArchive.add(bookEntity);
+              }
+              if (bookEntity.getLibInfo().getType() == 2) {
+                mBookEntitiesChoosen.add(bookEntity);
+              }
+              return Observable.just("");
+            })
+            .subscribe(bookEntities -> {
+              getViewState().fillInRV(mBookEntitiesReadNow, mBookEntitiesArchive,
+                  mBookEntitiesChoosen, selectedItemId);
+              getViewState().stopRefreshingView();
+            }, Throwable::printStackTrace);
     addToUnsubscription(subscription);
   }
 

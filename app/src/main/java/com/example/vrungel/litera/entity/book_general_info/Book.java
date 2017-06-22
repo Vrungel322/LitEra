@@ -1,4 +1,4 @@
-package com.example.vrungel.litera.entity;
+package com.example.vrungel.litera.entity.book_general_info;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;

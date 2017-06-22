@@ -1,10 +1,10 @@
 
-package com.example.vrungel.litera.entity;
+package com.example.vrungel.litera.entity.book_general_info;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
 
-public class Genre {
+public class Tag {
 
     @SerializedName("id")
     @Expose
@@ -12,28 +12,23 @@ public class Genre {
     @SerializedName("name")
     @Expose
     private String name;
-    @SerializedName("rating_place")
-    @Expose
-    private Integer ratingPlace;
 
     /**
      * No args constructor for use in serialization
      * 
      */
-    public Genre() {
+    public Tag() {
     }
 
     /**
      * 
      * @param id
      * @param name
-     * @param ratingPlace
      */
-    public Genre(Integer id, String name, Integer ratingPlace) {
+    public Tag(Integer id, String name) {
         super();
         this.id = id;
         this.name = name;
-        this.ratingPlace = ratingPlace;
     }
 
     public Integer getId() {
@@ -50,14 +45,6 @@ public class Genre {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public Integer getRatingPlace() {
-        return ratingPlace;
-    }
-
-    public void setRatingPlace(Integer ratingPlace) {
-        this.ratingPlace = ratingPlace;
     }
 
 }

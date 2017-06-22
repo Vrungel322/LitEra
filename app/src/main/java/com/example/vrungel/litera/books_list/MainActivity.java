@@ -1,5 +1,6 @@
-package com.example.vrungel.litera;
+package com.example.vrungel.litera.books_list;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -8,9 +9,14 @@ import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import butterknife.BindView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
+import com.example.vrungel.litera.R;
 import com.example.vrungel.litera.base.BaseActivity;
-import com.example.vrungel.litera.entity.BookEntity;
+import com.example.vrungel.litera.book_reader.BookReaderActivity;
+import com.example.vrungel.litera.entity.book_general_info.BookEntity;
+import com.example.vrungel.litera.utils.Constants;
+import com.example.vrungel.litera.utils.ItemClickSupport;
 import java.util.ArrayList;
+import timber.log.Timber;
 
 public class MainActivity extends BaseActivity implements IMainActivityView {
 
@@ -46,6 +52,16 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
       }
       return false;
     });
+
+    ItemClickSupport.addTo(mRecyclerView).setOnItemClickListener((recyclerView, position, v) -> {
+      startNewActivity(mBooksAdapter.getBooksEntities().get(position));
+    });
+  }
+
+  private void startNewActivity(BookEntity bookEntity) {
+    Intent intent = new Intent(MainActivity.this, BookReaderActivity.class);
+    intent.putExtra(Constants.BOOK_ID, bookEntity.getBook().getId().toString());
+    startActivity(intent);
   }
 
   @Override public void fillInRV(ArrayList<BookEntity> entitiesReadNow,

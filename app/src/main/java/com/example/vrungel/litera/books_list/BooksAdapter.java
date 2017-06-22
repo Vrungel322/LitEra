@@ -1,4 +1,4 @@
-package com.example.vrungel.litera;
+package com.example.vrungel.litera.books_list;
 
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -11,8 +11,9 @@ import butterknife.ButterKnife;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.load.model.GlideUrl;
 import com.bumptech.glide.load.model.LazyHeaders;
-import com.example.vrungel.litera.entity.BookEntity;
-import com.example.vrungel.litera.entity.Genre;
+import com.example.vrungel.litera.R;
+import com.example.vrungel.litera.entity.book_general_info.BookEntity;
+import com.example.vrungel.litera.entity.book_general_info.Genre;
 import java.util.ArrayList;
 import java.util.List;
 import okhttp3.Credentials;
@@ -56,6 +57,10 @@ public class BooksAdapter extends RecyclerView.Adapter<BooksAdapter.BooksViewHol
 
   @Override public int getItemCount() {
     return mBooksEntities.size();
+  }
+
+  public ArrayList<BookEntity> getBooksEntities() {
+    return mBooksEntities;
   }
 
   static class BooksViewHolder extends RecyclerView.ViewHolder {

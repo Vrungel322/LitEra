@@ -1,9 +1,9 @@
-package com.example.vrungel.litera;
+package com.example.vrungel.litera.books_list;
 
 import com.arellomobile.mvp.MvpView;
 import com.arellomobile.mvp.viewstate.strategy.AddToEndSingleStrategy;
 import com.arellomobile.mvp.viewstate.strategy.StateStrategyType;
-import com.example.vrungel.litera.entity.BookEntity;
+import com.example.vrungel.litera.entity.book_general_info.BookEntity;
 import java.util.ArrayList;
 
 /**
