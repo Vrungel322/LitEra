@@ -3,6 +3,8 @@ package com.example.vrungel.litera;
 import android.os.Bundle;
 import android.support.design.widget.BottomNavigationView;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.widget.GridLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.widget.TextView;
 import butterknife.BindView;
 import com.arellomobile.mvp.presenter.InjectPresenter;
@@ -16,10 +18,16 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
   @BindView(R.id.message) TextView mTextMessage;
   @BindView(R.id.navigation) BottomNavigationView mBottomNavigationView;
   @BindView(R.id.swipeRefreshLayout) SwipeRefreshLayout mSwipeRefreshLayout;
+  @BindView(R.id.rvBooks) RecyclerView mRecyclerView;
+  private BooksAdapter mBooksAdapter;
 
   @Override protected void onCreate(Bundle savedInstanceState) {
     setContentView(R.layout.activity_main);
     super.onCreate(savedInstanceState);
+    mRecyclerView.setLayoutManager(new GridLayoutManager(this, 2));
+    mBooksAdapter = new BooksAdapter();
+    mRecyclerView.setAdapter(mBooksAdapter);
+
     mSwipeRefreshLayout.setOnRefreshListener(() -> {
       mainActivityPresenter.fetchAllBooks(mBottomNavigationView.getSelectedItemId());
     });
@@ -47,15 +55,19 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     switch (selectedItemId) {
       case 0:
         mTextMessage.setText(entitiesReadNow.size() + "");
+        mBooksAdapter.addListBookEntity(entitiesReadNow);
         break;
       case R.id.navigation_read:
         mTextMessage.setText(entitiesReadNow.size() + "");
+        mBooksAdapter.addListBookEntity(entitiesReadNow);
         break;
       case R.id.navigation_archive:
         mTextMessage.setText(bookEntitiesArchive.size() + "");
+        mBooksAdapter.addListBookEntity(bookEntitiesArchive);
         break;
       case R.id.navigation_choosen:
         mTextMessage.setText(bookEntitiesChoosen.size() + "");
+        mBooksAdapter.addListBookEntity(bookEntitiesChoosen);
         break;
     }
   }
@@ -68,7 +80,7 @@ public class MainActivity extends BaseActivity implements IMainActivityView {
     if (mSwipeRefreshLayout.isRefreshing()) mSwipeRefreshLayout.setRefreshing(false);
   }
 
-  @Override public void fillInCurrentRV(ArrayList<BookEntity> bookEntitiesChoosen) {
-    mTextMessage.setText(bookEntitiesChoosen.size() + "");
+  @Override public void fillInCurrentRV(ArrayList<BookEntity> bookEntities) {
+    mBooksAdapter.addListBookEntity(bookEntities);
   }
 }
